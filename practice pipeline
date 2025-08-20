@@ -1,0 +1,31 @@
+pipeline{
+    agent any
+    stages{
+        stage('Continuous download'){
+            steps{
+                git branch: 'main', url: 'https://github.com/jotideynewgit/jenkins-git-repo.git'
+            }
+        }
+        stage('Continuous build'){
+            steps{
+                sh 'python3 hello.py'
+            }
+        }
+        stage('Continuous deployment'){
+            steps{
+                sh 'scp "/var/lib/jenkins/workspace/20th august git Jenkins pipeline/hello.py" ubuntu@172.31.1.97:/home/ubuntu/demogit/hello.py'
+            }
+        }
+        stage('Continuous testing '){
+            steps{
+                sh 'python3 "/var/lib/jenkins/workspace/20th august git Jenkins pipeline/hello.py"'
+            }
+        }
+        stage('Continuous release '){
+            steps{
+                sh 'scp "/var/lib/jenkins/workspace/20th august git Jenkins pipeline/hello.py" ubuntu@172.31.1.97:/home/ubuntu/demogit/hello.py'
+                
+            }
+        }
+    }
+}
